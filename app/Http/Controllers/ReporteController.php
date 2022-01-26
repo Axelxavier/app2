@@ -18,7 +18,7 @@ class ReporteController extends Controller
                     ->distinct()
                     ->where('descuento_tipo','cobro%')
                     ->where('Tipo_Marca','TERCERAS')
-                    ->where('id_descripcion','ProvFac_Dic2021')  
+                    ->where('id_descripcion','Enero2022')  
                     //->wherein('id_descripcion',['Junio2021_aldeas','Julio2021_aldeas'])
                     // ->where('Proveedor','like','%full bik%')                                    
                     ->get();
@@ -41,7 +41,7 @@ class ReporteController extends Controller
                    ->distinct()
                    ->where('descuento_tipo','Cobro 100%')
                    ->where('Tipo_Marca','TERCERAS')
-                   ->where('id_descripcion','ProvFac_Dic2021')
+                   ->where('id_descripcion','Enero2022')
                    //->wherein('id_descripcion',['Junio2021_aldeas','Julio2021_aldeas'])
                    //->where('Proveedor','like','%day of%')                                    
                    ->get();
