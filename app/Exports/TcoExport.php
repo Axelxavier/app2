@@ -35,7 +35,7 @@ class TcoExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSty
     {
         return [
             ['Liquidación de Servicios Logisticos'],
-            ['Del 01 Ene al 20 Ene'],
+            ['Del 21 Ene al 20 Feb'],
             ['Proveedor',
             'Division',
             'Fecha Proceso',
@@ -58,26 +58,26 @@ class TcoExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSty
         $nomprov = $this->nomprov;
         
         $provporcentajes = DB::table('pn_coblog_tco')
-                    ->select('Proveedor', 
-                            'Division', 
-                            'Fecha_Proceso',
-                            'Documento', 
-                            'Marca',
-                            'Tipo_Producto',
-                            'unidades_cross',
-                            'unidades_pick',
-                            'unidades_dev',
-                            'stock_s_cross', 
-                            'stock_s_pick', 
-                            'stock_s_dev', 
-                            'descuento_aplicado', 
-                            'monto_aplicado')                    
-                    ->where('descuento_tipo','cobro%')
-                    ->where('Tipo_Marca','TERCERAS')
-                    ->where('id_descripcion','Enero2022')
-                    //->wherein('id_descripcion',['Junio2021_aldeas','Julio2021_aldeas'])
-                    ->where('Proveedor','like','%'.$nomprov.'%')                    
-                    ->get();
+            ->select('Proveedor', 
+                'Division', 
+                'Fecha_Proceso',
+                'Documento', 
+                'Marca',
+                'Tipo_Producto',
+                'unidades_cross',
+                'unidades_pick',
+                'unidades_dev',
+                'stock_s_cross', 
+                'stock_s_pick', 
+                'stock_s_dev', 
+                'descuento_aplicado', 
+                'monto_aplicado')                    
+            ->where('descuento_tipo','cobro%')
+            ->where('Tipo_Marca','TERCERAS')
+            ->where('id_descripcion','Febrero2022')
+            //->wherein('id_descripcion',['Junio2021_aldeas','Julio2021_aldeas'])
+            ->where('Proveedor','like','%'.$nomprov.'%')                    
+            ->get();
 
         $this->cuentafilas = count($provporcentajes);
 

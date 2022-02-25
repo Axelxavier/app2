@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\TcoExport;
 use App\Exports\TcoExportNormal;
+use App\Exports\NsExport;
 use App\Exports\FillrateExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,7 @@ class ReporteController extends Controller
                    ->distinct()
                    ->where('descuento_tipo','Cobro 100%')
                    ->where('Tipo_Marca','TERCERAS')
-                   ->where('id_descripcion','Enero2022')
+                   ->where('id_descripcion','Febrero2022')
                    //->wherein('id_descripcion',['Junio2021_aldeas','Julio2021_aldeas'])
                    //->where('Proveedor','like','%day of%')                                    
                    ->get();
@@ -60,13 +61,13 @@ class ReporteController extends Controller
    public function generareportefr(){
 
     $provfillrate = DB::table('pn_fillrate_comu')
-                ->select('CODPROVEEDOR','PROVEEDOR')
-                ->distinct() 
-                ->where('id_descripcion','Enero2022')                
-                ->where('FLAG_OCABIERTA','NO')                
-                ->where('ESTADO','Recepcion Completa')             
-                //->where('PROVEEDOR','like','%NEWELL%')         
-                ->get();
+        ->select('CODPROVEEDOR','PROVEEDOR')
+        ->distinct() 
+        ->where('id_descripcion','Enero2022')                
+        ->where('FLAG_OCABIERTA','NO')                
+        ->where('ESTADO','Recepcion Completa')             
+        //->where('PROVEEDOR','like','%NEWELL%')         
+        ->get();
     
     foreach ($provfillrate as $provfr) {
         
@@ -77,6 +78,27 @@ class ReporteController extends Controller
 
     return 'Listo';       
     
-}
+    }
+
+    public function generareportens(){
+
+        $provnivelservicio = DB::table('pn_nivelservicio')
+            ->select('RUC','RAZON_SOCIAL')
+            ->distinct() 
+            //->where('id_descripcion','Enero2022')                
+            ->where('FLAG_OCABIERTA','NO')                            
+            //->where('PROVEEDOR','like','%NEWELL%')         
+            ->get();
+        
+        foreach ($provnivelservicio as $provns) {
+            
+            $reporte = new NsExport($provns->CODPROVEEDOR);
+    
+            Excel::store($reporte, $provns->PROVEEDOR.'.xlsx','public');
+        }
+    
+        return 'Listo';       
+        
+        }
     
 }

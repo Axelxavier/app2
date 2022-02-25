@@ -23,6 +23,7 @@ Route::get('/', function () {
 //ruta para cargar el archivo tco, tiene que estar en formato csv
 Route::get('/cargatco',[CargaController::class,'cargatco'])->name('cargatco');
 Route::get('/cargafr',[CargaController::class,'cargafr'])->name('cargafr');
+Route::get('/cargans',[CargaController::class,'cargans'])->name('cargans');
 
 Route::get('/reportetco',[ReporteController::class,'generareporte'])->name('reportetco');
 Route::get('/reportetconormal',[ReporteController::class,'generareportenormal'])->name('reportetconormal');

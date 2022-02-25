@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tco;
 use App\Models\Fillrate;
+use App\Models\NivelServicio;
 use Illuminate\Http\Request;
 
 class CargaController extends Controller
@@ -59,7 +60,7 @@ class CargaController extends Controller
             $tco->save();
             
         }
-        return('hecho!');
+        return('Carga del TCO exitosa!');
     }
 
     public function cargafr(){
@@ -158,6 +159,80 @@ class CargaController extends Controller
             $fr->save();
             
         }
-        return('hecho!');
+        return('Carga de Fr exitosa!');
+    }
+
+    public function cargans(){
+        
+        //antes es necesario copiar el archivo cargatco en la ruta public
+        $path = public_path('cargaNS.csv');          
+        
+        //lines nos devuelve un array por linea del archivo
+        $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);        
+        //return sizeof($lines);
+        //utf8 para eliminar los errores con la condificación
+        //array map aplica la funcion a cada elemento del array
+        $utf8_lines = array_map('utf8_encode',$lines);
+        //return $utf8_lines;
+        //str_getcsv organiza en un array cada elemento
+        $array = array_map('str_getcsv',$utf8_lines);       
+        //return $array;
+
+        //return sizeof($array);
+
+        for ($i=1; $i < sizeof($array); $i++) { 
+
+            $Ns = new NivelServicio();
+            $Ns->ORDEN_COMPRA = $array[$i][0];
+            $Ns->CUD = $array[$i][1];
+            $Ns->Cantidad_CUD_BT = $array[$i][2];
+            $Ns->NS_RECIBIDO_RIPLEY = $array[$i][3];
+            $Ns->FECHA_RECIBIDO_RIPLEY = $array[$i][4];
+            $Ns->FECHA_PROGRAMADA_INGRESO_CD = $array[$i][5];
+            $Ns->SUC_RESERVA_HOM = $array[$i][6];
+            $Ns->CLIENTE_DNI = $array[$i][7];
+            $Ns->CLIENTE_NOMBRE = $array[$i][8];
+            $Ns->ESTADO_FLUJO = $array[$i][9];
+            $Ns->FECHA_VENTA = $array[$i][10];
+            $Ns->PATENTE = $array[$i][11];
+            $Ns->CODVAR = $array[$i][12];
+            $Ns->EAN13 = $array[$i][13];
+            $Ns->DESCRIPCION_PRODUCTO = $array[$i][14];
+            $Ns->SUC_RESERVA = $array[$i][15];
+            $Ns->DIVISION = $array[$i][16];
+            $Ns->COD_DEPTO = $array[$i][17];
+            $Ns->DEPARTAMENTO = $array[$i][18];
+            $Ns->CODLIN = $array[$i][19];
+            $Ns->LIN_DESCRIPCION = $array[$i][20];
+            $Ns->MARCA = $array[$i][21];
+            $Ns->DEP_CAT = $array[$i][22];
+            $Ns->UNIDADES = $array[$i][23];
+            $Ns->PRECIO_UNITARIO = $array[$i][24];
+            $Ns->VENTA_CON_IGV = $array[$i][25];
+            $Ns->NRO_GUIA = $array[$i][26];
+            $Ns->RAZON_SOCIAL_V = $array[$i][27];
+            $Ns->PAIS_REGION = $array[$i][28];
+            $Ns->PAIS_DISTRITO = $array[$i][29];
+            $Ns->NRO_BOLETA = $array[$i][30];
+            $Ns->COD_SUC_DESPACHO = $array[$i][31];
+            $Ns->SUC_DESPACHO = $array[$i][32];
+            $Ns->COD_SUC_RESERVA = $array[$i][33];
+            $Ns->COD_SUC_STOCK = $array[$i][34];
+            $Ns->SUC_STOCK = $array[$i][35];
+            $Ns->MODALIDAD_DESPACHO = $array[$i][36];
+            $Ns->TIPO_DESPACHO = $array[$i][37];
+            $Ns->SUCURSAL_RESPONSABLE = $array[$i][38];
+            $Ns->FLUJOS_PROV_VERDE = $array[$i][39];
+            $Ns->COMPARA_FECHAS = $array[$i][40];
+            $Ns->STATUS = $array[$i][41];
+            $Ns->SEMANA = $array[$i][42];
+            $Ns->RUC = $array[$i][43];
+            $Ns->RAZON_SOCIAL = $array[$i][44];
+              
+
+            $Ns->save();
+            
+        }
+        return('Carga de Ns Exitosa!');
     }
 }
